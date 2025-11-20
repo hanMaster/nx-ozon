@@ -9,20 +9,6 @@ export default function CategoryFilter() {
     const router = useRouter();
     const path = usePathname();
 
-    // const docClick = (e: Event) => {
-    //     if (isOpen && e.target){}
-    //     console.log(e.target);
-    //     // setIsOpen(false);
-    // };
-
-    // useEffect(() => {
-    //     document.addEventListener('click', docClick);
-
-    //     return () => {
-    //         document.removeEventListener('click', docClick);
-    //     };
-    // }, []);
-
     const applyFilter = (category: string) => {
         setIsOpen(!isOpen);
         const params = new URLSearchParams(searchParams);
