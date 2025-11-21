@@ -1,20 +1,26 @@
-import { Good, SearchParams } from "../types";
+import {Good, SearchParams} from "../types";
 
-export const getData = async (searchParams: SearchParams): Promise<Good[]> => {
+export const getData = async (sParams: SearchParams): Promise<Good[]> => {
 
     const res = await fetch(
         'https://ozon-intensive-default-rtdb.asia-southeast1.firebasedatabase.app/goods.json'
     );
-    let goods = (await res.json()) as Good[];
+    const goods = (await res.json()) as Good[];
 
-    if (searchParams.category) {
-        goods = goods.filter(g => g.category === searchParams.category);
-    }
+    return goods.filter(g => {
+        if (sParams.category && g.category !== sParams.category) {
+            return false;
+        }
 
-    if (searchParams.search) {
-        goods = goods.filter(g => g.title.toLocaleLowerCase().includes(searchParams.search!.toLocaleLowerCase()));
-    }
+        if (sParams.search && !g.title.toLocaleLowerCase().includes(sParams.search.toLocaleLowerCase())) {
+            return false;
+        }
 
-    return goods;
+        if (sParams.sale && !g.sale) {
+            return false;
+        }
+
+        return true;
+    });
 
 };
