@@ -1,4 +1,4 @@
-export type Good = {
+export interface Good {
     id: string;
     title: string;
     category: string;
@@ -19,3 +19,15 @@ export type SearchParams = {
     min?: string;
     max?: string;
 };
+
+export type CartCtxType = {
+    isOpen: boolean;
+    setIsOpen: (value: boolean) => void;
+    cartItems: CartItem[];
+    addToCart: (item: Good) => void;
+    removeFromCart: (item: Good) => void;
+};
+
+export interface CartItem extends Good {
+    count: number;
+}

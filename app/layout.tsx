@@ -1,13 +1,8 @@
-import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Header from './ui/Header';
 import Cart from './ui/Cart';
+import CartProvider from './providers/CartProvider';
 import './scss/style.scss';
-
-export const metadata: Metadata = {
-    title: 'Ozon',
-    description: 'Intensive Ozon on Nextjs',
-};
 
 const GTEestiProText = localFont({
     src: [
@@ -36,9 +31,11 @@ export default function RootLayout({
                 />
             </head>
             <body className={GTEestiProText.className}>
-                <Header />
-                <main>{children}</main>
-                <Cart />
+                <CartProvider>
+                    <Header />
+                    <main>{children}</main>
+                    <Cart />
+                </CartProvider>
             </body>
         </html>
     );

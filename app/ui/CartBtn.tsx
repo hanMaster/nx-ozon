@@ -1,26 +1,19 @@
-'use client'
+'use client';
 
-import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import { useCart } from '../providers/CartProvider';
 
 export default function CartBtn() {
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const path = usePathname();
-
-    const setOpenCartQuery = () => {
-        const params = new URLSearchParams(searchParams);
-        params.set('show-cart', 'true');
-        router.replace(`${path}?${params.toString()}`);
+    const { setIsOpen, cartItems } = useCart();
+    const openCart = (e: any) => {
+        e.preventDefault();
+        setIsOpen(true);
     };
 
     return (
-        <a href="#" id="cart" onClick={setOpenCartQuery}>
-            <span className="counter">0</span>
+        <a href="#" id="cart" onClick={openCart}>
+            <span className="counter">{cartItems.length}</span>
             <span className="icon">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
                         fill="currentColor"
                         fillRule="nonzero"

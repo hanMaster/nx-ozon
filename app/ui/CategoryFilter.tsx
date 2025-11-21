@@ -1,7 +1,7 @@
 'use client';
 
-import {usePathname, useRouter, useSearchParams} from 'next/navigation';
-import {useState} from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 export default function CategoryFilter() {
     const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,7 @@ export default function CategoryFilter() {
             </button>
             <div
                 className="catalog"
-                style={isOpen ? {display: 'block'} : undefined}
+                style={{ display: isOpen ? 'block' : 'none' }}
             >
                 <ul
                     className="catalog-list"
