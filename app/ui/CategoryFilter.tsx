@@ -1,7 +1,7 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import {usePathname, useRouter, useSearchParams} from 'next/navigation';
+import {useState} from 'react';
 
 export default function CategoryFilter() {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,11 @@ export default function CategoryFilter() {
     const applyFilter = (category: string) => {
         setIsOpen(!isOpen);
         const params = new URLSearchParams(searchParams);
-        params.set('category', category);
+        if (category === 'Все') {
+            params.delete('category');
+        } else {
+            params.set('category', category);
+        }
         router.replace(`${path}?${params.toString()}`);
     };
 
@@ -24,7 +28,7 @@ export default function CategoryFilter() {
             </button>
             <div
                 className="catalog"
-                style={isOpen ? { display: 'block' } : undefined}
+                style={isOpen ? {display: 'block'} : undefined}
             >
                 <ul
                     className="catalog-list"
@@ -32,6 +36,7 @@ export default function CategoryFilter() {
                         applyFilter((e.target as HTMLLIElement).textContent);
                     }}
                 >
+                    <li>Все</li>
                     <li>Игровая приставка</li>
                     <li>Периферия для ПК</li>
                     <li>Игры и софт</li>

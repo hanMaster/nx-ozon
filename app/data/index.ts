@@ -20,6 +20,14 @@ export const getData = async (sParams: SearchParams): Promise<Good[]> => {
             return false;
         }
 
+        if (sParams.min && g.price < Number(sParams.min)) {
+            return false;
+        }
+
+        if (sParams.max && g.price > Number(sParams.max)) {
+            return false;
+        }
+
         return true;
     });
 

@@ -15,5 +15,7 @@ export type PageParams = {
 export type SearchParams = {
     category?: string;
     search?: string;
-    sale?: boolean;
+    sale?: string;
+    min?: string;
+    max?: string;
 };

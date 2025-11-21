@@ -1,7 +1,7 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import {usePathname, useRouter, useSearchParams} from 'next/navigation';
+import {useEffect, useState} from 'react';
 
 export default function Search() {
     const searchParams = useSearchParams();
@@ -22,6 +22,12 @@ export default function Search() {
         setSearch(sParam || '');
     }, [searchParams]);
 
+    const handleKeyUp = (key: string) => {
+        if (key === 'Enter') {
+            setSearchQuery();
+        }
+    }
+
     return (
         <div className="search">
             <div className="search-wrapper">
@@ -31,6 +37,7 @@ export default function Search() {
                     onChange={(e) => setSearch(e.target.value.trim())}
                     className="search-wrapper_input"
                     type="text"
+                    onKeyUp={(e) => handleKeyUp(e.key)}
                 />
             </div>
             <div className="search-btn">

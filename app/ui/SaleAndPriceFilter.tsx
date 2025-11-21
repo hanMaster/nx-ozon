@@ -8,12 +8,18 @@ export default function SaleAndPriceFilter() {
     const router = useRouter();
     const path = usePathname();
     const [sale, setSale] = useState<boolean>(false);
+    const [min, setMin] = useState<string>('');
+    const [max, setMax] = useState<string>('');
 
     useEffect(() => {
         const params = new URLSearchParams(searchParams);
-        const sParam = params.get('sale');
+        const saleParam = params.get('sale');
+        const minParam = params.get('min');
+        const maxParam = params.get('max');
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        setSale(sParam === 'true');
+        setSale(saleParam === 'true');
+        setMin(minParam ? minParam : '')
+        setMax(maxParam ? maxParam : '')
     }, [searchParams]);
 
     const handleSaleClick = (checked: boolean) => {
@@ -24,6 +30,23 @@ export default function SaleAndPriceFilter() {
             params.set('sale', 'true');
         } else {
             params.delete('sale');
+        }
+
+        router.replace(`${path}?${params.toString()}`);
+    }
+
+    const applyPriceFilter = () => {
+        const params = new URLSearchParams(searchParams);
+        if (min.length) {
+            params.set('min', min);
+        } else {
+            params.delete('min');
+        }
+
+        if (max.length) {
+            params.set('max', max);
+        } else {
+            params.delete('max');
         }
         router.replace(`${path}?${params.toString()}`);
     }
@@ -45,11 +68,10 @@ export default function SaleAndPriceFilter() {
                                 от
                             </label>
                             <input
-                                id="min"
                                 className="filter-price_input"
                                 type="number"
-                                step="1"
-                                min="1"
+                                value={min}
+                                onInput={(e) => setMin(e.currentTarget.value.trim())}
                             />
                         </div>
                         <div className="filter-price_input-wrapper">
@@ -60,16 +82,17 @@ export default function SaleAndPriceFilter() {
                                 до
                             </label>
                             <input
-                                id="max"
                                 className="filter-price_input"
                                 type="number"
-                                step="1"
-                                min="1"
+                                value={max}
+                                onInput={(e) => setMax(e.currentTarget.value.trim())}
                             />
                         </div>
                     </div>
+                    <button className="btn btn-primary" type='button' onClick={applyPriceFilter}>Применить</button>
                 </form>
             </div>
+            <br/>
             <div className="filter-check">
                 <label className="filter-check_label">
                     <input
