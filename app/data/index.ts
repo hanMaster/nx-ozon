@@ -1,11 +1,14 @@
 import {Good, SearchParams} from "../types";
 
-export const getData = async (sParams: SearchParams): Promise<Good[]> => {
-
+const fetchGoods = async () => {
     const res = await fetch(
         'https://ozon-intensive-default-rtdb.asia-southeast1.firebasedatabase.app/goods.json'
     );
-    const goods = (await res.json()) as Good[];
+    return (await res.json()) as Good[];
+}
+
+export const getData = async (sParams: SearchParams): Promise<Good[]> => {
+    const goods = await fetchGoods();
 
     return goods.filter(g => {
         if (sParams.category && g.category !== sParams.category) {
