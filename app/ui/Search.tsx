@@ -11,7 +11,11 @@ export default function Search() {
 
     const setSearchQuery = () => {
         const params = new URLSearchParams(searchParams);
-        params.set('search', search);
+        if (search.length) {
+            params.set('search', search);
+        } else {
+            params.delete('search');
+        }
         router.replace(`${path}?${params.toString()}`);
     };
 
